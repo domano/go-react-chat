@@ -14,6 +14,41 @@ import Paper from 'material-ui/Paper';
 
 import './chat.css'
 
+const mockPeople = [
+  {
+      name:"Batman",
+  },
+  {
+      name:"Wolverine",
+  },
+  {
+      name:"Muten Roshi",
+  },
+  {
+      name:"Boris Karloff",
+  },
+  {
+      name:"Max Mustermann",
+  },
+]
+
+const mockRooms = [
+  {
+      name:"MyTeam A",
+  },
+  {
+      name:"Off-Topic",
+  },
+  {
+      name:"Funny Memes",
+  },
+  {
+      name:"MyTeam B",
+  },
+  {
+      name:"Stuff",
+  },
+]
 class Chat extends React.Component {
   constructor(props) {
     super(props);
@@ -42,28 +77,36 @@ class Chat extends React.Component {
   render() {
     return (
       <MuiThemeProvider>
-      <div className="chat">
-        <div className="header">
-          <AppBar
-            title="Go React Chat!"
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-          />
+        <div className="chat">
+          <div className="header">
+            <AppBar
+              title="Go React Chat!"
+              iconClassNameRight="muidocs-icon-navigation-expand-more"
+            />
+          </div>
+          <People people={mockPeople}/>
+          <div className="rooms">
+          <Rooms rooms={mockRooms}/>
+          <Divider/>
+          <Rooms rooms={mockPeople}/>
+          </div>
+          <div className="messages">
+            <List>
+              {
+                this.state.messages.map(function (msg, index) {
+                  return <Paper className="message" zDepth={2}><ListItem key={index} primaryText={msg} /></Paper>
+                })
+              }
+            </List>
+          </div>
+          <div className="inputField">
+            <Divider />
+            <TextField id="inputField"
+              defaultValue=""
+              fullWidth={true}
+              onKeyPress={this._handleKeyPress.bind(this)} />
+          </div>
         </div>
-        <People/>
-        <Rooms/>
-        <div className="messages">
-          <List>
-            {
-              this.state.messages.map(function (msg, index) {
-                return <Paper className="message" zDepth={2}><ListItem key={index} primaryText={msg} /></Paper>
-              })
-            }
-          </List>
-        </div>
-          <TextField id="inputField" className="inputField"
-            defaultValue=""
-            onKeyPress={this._handleKeyPress.bind(this)} />
-      </div>
       </MuiThemeProvider>
     );
   }
