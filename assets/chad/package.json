@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "material-ui": "^0.19.4",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-scripts": "1.0.14"
@@ -16,8 +17,8 @@
     "build-storybook": "build-storybook -s public"
   },
   "devDependencies": {
-    "@storybook/react": "^3.2.12",
     "@storybook/addon-actions": "^3.2.12",
-    "@storybook/addon-links": "^3.2.12"
+    "@storybook/addon-links": "^3.2.12",
+    "@storybook/react": "^3.2.12"
   }
 }

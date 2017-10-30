@@ -6,5 +6,9 @@ import { linkTo } from '@storybook/addon-links';
 
 import Chat from '../chat/chat'
 
+
+
+
+
 storiesOf('Chat', module)
   .add('with text', () => <Chat messages={[]}/>)

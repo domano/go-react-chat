@@ -1,0 +1,43 @@
+:root {
+  --paper:#EFEFEF;
+}
+
+.chat {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+  grid-template-columns: 150px 1fr 1fr 150px;
+  grid-template-rows: 50px auto 50px;
+  grid-template-areas: 
+    "header header header header"
+    "rooms messages messages people"
+    "rooms inputField inputField people";
+}
+
+.rooms {
+  grid-area: rooms;
+}
+
+.header {
+  grid-area: header;
+}
+
+.messages {
+  grid-area: messages;
+  background-color: var(--paper);
+  overflow: auto;
+}
+
+.message {
+  background-color: #c5c5c5;
+}
+
+.inputField {
+  grid-area: inputField;
+}
+
+.people {
+  grid-area: people;
+}
