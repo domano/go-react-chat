@@ -62,6 +62,8 @@ class Chat extends React.Component {
     }
   }
 
+
+
   componentDidMount() {
     // this is an "echo" websocket service for testing pusposes
     this.connection = new WebSocket('ws://' + window.location.hostname + ':12345/chat');
@@ -93,7 +95,7 @@ class Chat extends React.Component {
           <div className="messages">
             <List>
               {
-                this.state.messages.map(function (msg, index) {
+                this.state.selectedRoom.messages.map(function (msg, index) {
                   return <Paper className="message" zDepth={2}><ListItem key={index} primaryText={msg} /></Paper>
                 })
               }

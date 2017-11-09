@@ -1,47 +1,64 @@
 package main
 
 import (
-	"io"
 	"net/http"
-	"sync"
-
-	"golang.org/x/net/websocket"
+	"github.com/gorilla/websocket"
+	"github.com/domano/go-react-chat/broadcast"	
+	"github.com/domano/go-react-chat/model"	
+	"encoding/json"
+	log "github.com/sirupsen/logrus"
 )
 
 var messages chan string = make(chan string)
+ 
+var bc  = broadcast.NewBroadCaster()
 
-var bc *BroadCaster = &BroadCaster{connections: make(map[*websocket.Conn]struct{})}
+var upgrader = websocket.Upgrader{} // use default options
 
-func ChatServer(ws *websocket.Conn) {
-	defer ws.Close()
-	bc.Add(ws)
-	io.Copy(bc, ws)
+var logger = log.StandardLogger()
+
+func ChatServer(rw http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(rw, r, nil)
+	if err != nil {
+		logger.WithError(err).Error("Failed upgrade")
+		return
+	}
+	defer conn.Close()
+	bc.Add(conn)
+	defer bc.Remove(conn)
+	encoder := json.NewEncoder(bc)
+	for {
+		_, reader, err := conn.NextReader()
+		if err != nil {
+			logger.WithError(err).Error("Failed reading")
+			return
+		}
+
+		msg := &model.Message{}
+		if err := json.NewDecoder(reader).Decode(msg); err != nil {
+			logger.WithError(err).Error("Failed decoding")
+			return
+		}
+		
+		logger.WithField("message", msg).Info("Sending msg")
+		// TODO: Do msg validation here
+			if err := encoder.Encode(msg); err != nil {
+				logger.WithError(err).Error("Failed encoding")
+				return
+			}
+	}
 }
 
 func main() {
-	http.Handle("/chat", websocket.Handler(ChatServer))
+	upgrader.CheckOrigin = func(r *http.Request) bool {
+		return true
+	}
+
+	http.HandleFunc("/chat", ChatServer)
+	println("Run server...")
 	err := http.ListenAndServe(":12345", nil)
 	if err != nil {
 		panic("ListenAndServe: " + err.Error())
 	}
 }
 
-type BroadCaster struct {
-	connections map[*websocket.Conn]struct{}
-	sync.RWMutex
-}
-
-func (bc *BroadCaster) Add(conn *websocket.Conn) {
-	bc.Lock()
-	bc.connections[conn] = struct{}{}
-	defer bc.Unlock()
-}
-
-func (bc *BroadCaster) Write(msg []byte) (n int, err error) {
-	bc.RLock()
-	for conn := range bc.connections {
-		conn.Write(msg)
-	}
-	bc.RUnlock()
-	return len(msg), nil
-}
