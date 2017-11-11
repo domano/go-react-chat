@@ -4,17 +4,17 @@ import (
 	"time"
 )
 type User struct {
-	Name string `json:",omitempty"`
+	Name string `json:"name,omitempty"`
 }
 
 type Message struct {
-	Text string `json:",omitempty"`
-	User User `json:",omitempty"`
-	Room Room `json:",omitempty"`
-	Timestamp time.Time `json:",omitempty"`
+	Text string `json:"text,omitempty"`
+	User *User `json:"user,omitempty"`
+	Room *Room `json:"room,omitempty"`
+	Timestamp *time.Time `json:"timestamp,omitempty"`
 }
 
 type Room struct {
-	Name string `json:",omitempty"`
-	Users []User `json:",omitempty"`
+	Name string `json:"name,omitempty"`
+	Users []User `json:"users,omitempty"`
 }

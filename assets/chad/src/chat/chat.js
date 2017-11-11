@@ -14,41 +14,6 @@ import Paper from 'material-ui/Paper';
 
 import './chat.css'
 
-const mockPeople = [
-  {
-      name:"Batman",
-  },
-  {
-      name:"Wolverine",
-  },
-  {
-      name:"Muten Roshi",
-  },
-  {
-      name:"Boris Karloff",
-  },
-  {
-      name:"Max Mustermann",
-  },
-]
-
-const mockRooms = [
-  {
-      name:"MyTeam A",
-  },
-  {
-      name:"Off-Topic",
-  },
-  {
-      name:"Funny Memes",
-  },
-  {
-      name:"MyTeam B",
-  },
-  {
-      name:"Stuff",
-  },
-]
 class Chat extends React.Component {
   constructor(props) {
     super(props);
@@ -71,9 +36,11 @@ class Chat extends React.Component {
     this.connection.onmessage = evt => {
       // add the new message to state
       this.setState({
+        let room = evt.data.room
         messages: this.state.messages.concat([evt.data])
       })
     }
+    this.setState({selectedRoom:0})
   };
 
   render() {
@@ -86,18 +53,19 @@ class Chat extends React.Component {
               iconClassNameRight="muidocs-icon-navigation-expand-more"
             />
           </div>
-          <People people={mockPeople}/>
+          <People people={mockPeople} />
           <div className="rooms">
-          <Rooms rooms={mockRooms}/>
-          <Divider/>
-          <Rooms rooms={mockPeople}/>
+            <Rooms rooms={this.state.rooms} selected={this.state.selectedRoom}/>
           </div>
           <div className="messages">
             <List>
               {
-                this.state.selectedRoom.messages.map(function (msg, index) {
-                  return <Paper className="message" zDepth={2}><ListItem key={index} primaryText={msg} /></Paper>
-                })
+                this.state.rooms[this.state.selectedRoom].messages
+                  .map((msg, index) => {
+                    return <Paper className="message" zDepth={2}>
+                      <ListItem key={index} primaryText={msg.text} />
+                    </Paper>
+                  })
               }
             </List>
           </div>
