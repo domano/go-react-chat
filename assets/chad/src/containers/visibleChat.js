@@ -11,9 +11,11 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps= (state) => {
+  //TODO pass on key press with correct dispatch function for websocket stuff
   onKeyPress: 
 }
 
+//TODO create websocket middleware
 
 // componentDidMount() {
 //   // this is an "echo" websocket service for testing pusposes

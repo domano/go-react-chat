@@ -14,6 +14,7 @@ import Paper from 'material-ui/Paper';
 
 import './chat.css'
 
+//TODO adapt to new redux changes
 const Chat = ({messages, rooms, selectedRoom, people, onKeyPress}) => {
       <MuiThemeProvider>
         <div className="chat">
