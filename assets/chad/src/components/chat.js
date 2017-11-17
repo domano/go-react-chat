@@ -14,37 +14,7 @@ import Paper from 'material-ui/Paper';
 
 import './chat.css'
 
-class Chat extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = props
-  }
-
-  _handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      let message = e.target.value
-      this.connection.send(message)
-    }
-  }
-
-
-
-  componentDidMount() {
-    // this is an "echo" websocket service for testing pusposes
-    this.connection = new WebSocket('ws://' + window.location.hostname + ':12345/chat');
-    // listen to onmessage event
-    this.connection.onmessage = evt => {
-      // add the new message to state
-      this.setState({
-        let room = evt.data.room
-        messages: this.state.messages.concat([evt.data])
-      })
-    }
-    this.setState({selectedRoom:0})
-  };
-
-  render() {
-    return (
+const Chat = ({messages, rooms, selectedRoom, people, onKeyPress}) => {
       <MuiThemeProvider>
         <div className="chat">
           <div className="header">
@@ -53,14 +23,14 @@ class Chat extends React.Component {
               iconClassNameRight="muidocs-icon-navigation-expand-more"
             />
           </div>
-          <People people={mockPeople} />
+          <People people={people} />
           <div className="rooms">
-            <Rooms rooms={this.state.rooms} selected={this.state.selectedRoom}/>
+            <Rooms rooms={rooms} selected={selectedRoom}/>
           </div>
           <div className="messages">
             <List>
               {
-                this.state.rooms[this.state.selectedRoom].messages
+                rooms[selectedRoom].messages
                   .map((msg, index) => {
                     return <Paper className="message" zDepth={2}>
                       <ListItem key={index} primaryText={msg.text} />
@@ -74,14 +44,11 @@ class Chat extends React.Component {
             <TextField id="inputField"
               defaultValue=""
               fullWidth={true}
-              onKeyPress={this._handleKeyPress.bind(this)} />
+              onKeyPress={onKeyPress} />
           </div>
         </div>
       </MuiThemeProvider>
-    );
+    ;
   }
-
-
-}
 
 export default Chat;

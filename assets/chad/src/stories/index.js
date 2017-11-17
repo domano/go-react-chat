@@ -5,8 +5,12 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import Chat from '../chat/chat'
+import chatReducer from '../reducers/chat'
+import { createStore } from 'redux';
 
 
+
+const store = createStore(chatReducer)
 
 const mockPeople = [
   {
