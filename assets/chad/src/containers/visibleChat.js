@@ -15,18 +15,3 @@ const mapDispatchToProps= (state) => {
   onKeyPress: 
 }
 
-//TODO create websocket middleware
-
-// componentDidMount() {
-//   // this is an "echo" websocket service for testing pusposes
-//   this.connection = new WebSocket('ws://' + window.location.hostname + ':12345/chat');
-//   // listen to onmessage event
-//   this.connection.onmessage = evt => {
-//     // add the new message to state
-//     this.setState({
-//       let room = evt.data.room
-//       messages: this.state.messages.concat([evt.data])
-//     })
-//   }
-//   this.setState({selectedRoom:0})
-// };
