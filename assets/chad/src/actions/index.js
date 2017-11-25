@@ -1,4 +1,4 @@
-export const onKeyPressByState = (store) => (e) => {
+export const onKeyPressByStore = (store) => (e) => {
   if (e.key === 'Enter') {
     let state = store.getState()
     let text = e.target.value
@@ -6,8 +6,16 @@ export const onKeyPressByState = (store) => (e) => {
       text: text,
       room: state.selectedRoom
     }
-    this.store.connection.send(message)
+    store.dispatch({ type: "SEND_MSG", msg: message })
   }
+}
+
+export const onClickByStore = (store) => (e) => {
+  let text = e.target.value
+  let room = {
+    name: text,
+  }
+  store.dispatch({ type: "SELECT_ROOM", room: room })
 }
 
 

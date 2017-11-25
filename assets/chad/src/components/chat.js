@@ -7,7 +7,6 @@ import People from './people'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 
@@ -15,8 +14,8 @@ import Paper from 'material-ui/Paper';
 import './chat.css'
 
 //TODO adapt to new redux changes
-const Chat = ({messages, rooms, selectedRoom, people, onKeyPress}) => {
-      <MuiThemeProvider>
+const Chat = ({messages, rooms, selectedRoom, people, onKeyPress, onClick}) => {
+      return <MuiThemeProvider>
         <div className="chat">
           <div className="header">
             <AppBar
@@ -26,12 +25,12 @@ const Chat = ({messages, rooms, selectedRoom, people, onKeyPress}) => {
           </div>
           <People people={people} />
           <div className="rooms">
-            <Rooms rooms={rooms} selected={selectedRoom}/>
+            <Rooms onClick={onClick} rooms={rooms} selected={selectedRoom.name}/>
           </div>
           <div className="messages">
             <List>
               {
-                rooms[selectedRoom].messages
+                messages
                   .map((msg, index) => {
                     return <Paper className="message" zDepth={2}>
                       <ListItem key={index} primaryText={msg.text} />
