@@ -13,7 +13,6 @@ import Paper from 'material-ui/Paper';
 
 import './chat.css'
 
-//TODO adapt to new redux changes
 const Chat = ({messages, rooms, selectedRoom, people, onKeyPress, onClick}) => {
       return <MuiThemeProvider>
         <div className="chat">
@@ -32,7 +31,7 @@ const Chat = ({messages, rooms, selectedRoom, people, onKeyPress, onClick}) => {
               {
                 messages
                   .map((msg, index) => {
-                    return <Paper className="message" zDepth={2}>
+                    return <Paper key={index} className="message" zDepth={2}>
                       <ListItem key={index} primaryText={msg.text} />
                     </Paper>
                   })

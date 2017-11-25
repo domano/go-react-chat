@@ -7,37 +7,38 @@ const getVisibleMessages = (messages, selectedRoom) => {
   return messages.filter(msg => msg.room.name === selectedRoom.name)
 }
 
-const mapStateToProps = (state) => ({
-  ...state,
-  messages: getVisibleMessages(state.messages, state.selectedRoom)
-})
+const mapStateToProps = (state, ownProps) => {
+  let data = {...ownProps, ...state}
+  console.log("state: "+JSON.stringify(state))
+  return ({
+    ...data,
+    messages: getVisibleMessages(data.messages, data.selectedRoom)
+  })
+}
 
 const mapDispatchToProps = (dispatch) => {
   let connect = () => { dispatch({ type: "CONNECT" }) }
   let disconnect = () => { dispatch({ type: "DISCONNECT" }) }
   let send = (msg) => { dispatch({ type: "SEND_MESSAGE", message: msg }) }
-  return ({ connect, disconnect, send })
+  return ({dispatch, connect, disconnect, send })
 }
 
-class ChatContainer extends React.Component {
+class VisibleChat extends React.Component {
   componentDidMount() {
-    this.unsubscribe = this.props.store.subscribe(() =>
-      this.forceUpdate()
-    );
     this.props.connect()
   }
 
-
   render() {
+    console.log("this.props")
+    console.log(this.props)
     return <Chat
       {...this.props}
-      selectedRoom={this.props.rooms[0]}
-      onKeyPress={onKeyPressByStore(this.props.store)}
-      onClick={onClickByStore(this.props.store)}
+      onKeyPress={onKeyPressByStore(this.props)}
+      onClick={onClickByStore(this.props)}
     />
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(VisibleChat)
 
 //{messages, rooms, selectedRoom, people, onKeyPress}

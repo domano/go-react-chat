@@ -1,17 +1,18 @@
 export const onKeyPressByStore = (store) => (e) => {
   if (e.key === 'Enter') {
-    let state = store.getState()
     let text = e.target.value
     let message = {
       text: text,
-      room: state.selectedRoom
+      room: store.selectedRoom
     }
+    console.log("Dispatching send_msg: "+JSON.stringify(message))
     store.dispatch({ type: "SEND_MSG", msg: message })
   }
 }
 
 export const onClickByStore = (store) => (e) => {
-  let text = e.target.value
+  console.log(e.target.textContent)
+  let text = e.target.textContent
   let room = {
     name: text,
   }
