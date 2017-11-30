@@ -27,13 +27,13 @@ func main() {
 }
 
 type BroadCaster struct {
-	connections map[*websocket.Conn]struct{}
+	connections map[*websocket.Conn]bool
 	sync.RWMutex
 }
 
 func (bc *BroadCaster) Add(conn *websocket.Conn) {
 	bc.Lock()
-	bc.connections[conn] = struct{}{}
+	bc.connections[conn] = true
 	defer bc.Unlock()
 }
 

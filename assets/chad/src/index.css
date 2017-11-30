@@ -2,4 +2,41 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  vertical-align: bottom;
+  align-content: center;
+}
+
+/* Chat containers */
+.chat {
+  margin:auto;
+  width: 700px;
+  height: 700px;
+  padding: 10px;
+  position:relative;
+  align-content: center;
+  border: 2px solid #000000;
+  border-radius: 25px;
+  background-color: #a5a5a5;
+}
+
+.messages {
+  max-height: 90%;
+  overflow: auto;
+}
+.message {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.input {
+  position: absolute;
+  bottom: 20px;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background-color: rgb(139, 139, 139);
+  color: white;
 }
