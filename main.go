@@ -10,7 +10,7 @@ import (
 
 var messages chan string = make(chan string)
 
-var bc *BroadCaster = &BroadCaster{connections: make(map[*websocket.Conn]struct{})}
+var bc *BroadCaster = &BroadCaster{connections: make(map[*websocket.Conn]bool)}
 
 func ChatServer(ws *websocket.Conn) {
 	defer ws.Close()

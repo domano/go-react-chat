@@ -38,7 +38,7 @@ class Chat extends Component {
             })
           }
         </div>
-        <input className="input" defaultValue="Enter default State" onKeyPress={this.onKeyPress.bind(this)} />
+        <input className="input" placeholder="Enter text" onKeyPress={this.onKeyPress.bind(this)} />
       </div>
     );
   }
