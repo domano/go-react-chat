@@ -10,8 +10,8 @@ body {
 .chat {
   margin:auto;
   margin-top: 20px;
-  width: 700px;
-  height: 700px;
+  width: 400px;
+  height: 600px;
   padding: 10px;
   position:relative;
   align-content: center;
@@ -37,7 +37,7 @@ body {
 .input {
   position: absolute;
   bottom: 20px;
-  width: 90%;
+  width: 80%;
   margin-left: 5%;
   margin-right: 5%;
   padding-left: 10px;
