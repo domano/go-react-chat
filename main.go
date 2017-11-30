@@ -33,8 +33,8 @@ type BroadCaster struct {
 
 func (bc *BroadCaster) Add(conn *websocket.Conn) {
 	bc.Lock()
-	bc.connections[conn] = true
 	defer bc.Unlock()
+	bc.connections[conn] = true
 }
 
 func (bc *BroadCaster) Write(msg []byte) (n int, err error) {

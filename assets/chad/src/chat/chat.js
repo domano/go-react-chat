@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ChatEntry from './chatentry'
+import Uhoh from '../uhoh.mp3'
 
 class Chat extends Component {
   constructor(props) {
@@ -8,11 +9,13 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    // this is an "echo" websocket service for testing pusposes
     this.connection = new WebSocket('ws://' + window.location.hostname + ':12345/chat');
+    this.audio = new Audio(Uhoh)
+    
     // listen to onmessage event
     this.connection.onmessage = evt => {
       // add the new message to state
+      this.audio.play()
       this.setState({
         messages: this.state.messages.concat([evt.data])
       })
@@ -34,7 +37,7 @@ class Chat extends Component {
         <div className="messages">
           {
             this.state.messages.map(function (msg, index) {
-              return <ChatEntry message={msg} />
+              return <ChatEntry key={index} message={msg} />
             })
           }
         </div>

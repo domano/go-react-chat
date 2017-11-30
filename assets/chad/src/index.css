@@ -9,6 +9,7 @@ body {
 /* Chat containers */
 .chat {
   margin:auto;
+  margin-top: 20px;
   width: 700px;
   height: 700px;
   padding: 10px;
@@ -21,7 +22,9 @@ body {
 
 .messages {
   max-height: 90%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  word-break: break-all;
 }
 .message {
   border: 2px solid #dedede;
